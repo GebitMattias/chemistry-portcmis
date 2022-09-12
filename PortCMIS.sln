@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortCMIS", "PortCMIS\PortCMIS.csproj", "{A3AB61BE-057D-4DD4-824C-AC174322C5D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortCMIS", "PortCMIS\PortCMIS.csproj", "{A3AB61BE-057D-4DD4-824C-AC174322C5D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortCMISTests", "PortCMISTests\PortCMISTests.csproj", "{217BE2A3-7F09-49DD-B69C-7D900AAC15F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortCMISTests", "PortCMISTests\PortCMISTests.csproj", "{217BE2A3-7F09-49DD-B69C-7D900AAC15F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortCMISWin", "PortCMISWin\PortCMISWin.csproj", "{C9C05283-55A0-4F84-9476-E0E438927A08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortCMISWin", "PortCMISWin\PortCMISWin.csproj", "{C9C05283-55A0-4F84-9476-E0E438927A08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,5 +68,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A01CEF06-9DEA-4E13-95A8-63F62F9B8B76}
 	EndGlobalSection
 EndGlobal
