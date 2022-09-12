@@ -148,5 +148,9 @@ namespace PortCMIS.Client
         /// <summary>Defines if getObjectOfLatestVersion should use the version series ID instead of the object ID
         /// (Workaround for SharePoint 2010 and SharePoint 2013)</summary>
         public const string LatestVersionWithVersionSeriesId = "org.apache.chemistry.portcmis.workaround.getLatestVersionWithVersionSeriesId";
+
+        /// <summary>Defines the Null value to write into Json for BrowserBinding</summary>
+        /// (Workaround for d.velop d3 that does not accept real null)
+        public const string JsonNullValue = "org.apache.chemistry.portcmis.workaround.jsonNullValue";
     }
 }
