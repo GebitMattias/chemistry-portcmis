@@ -22,6 +22,7 @@ using PortCMIS.Binding.Browser.Json;
 using System;
 using System.IO;
 using System.Numerics;
+using PortCMIS.binding.browser;
 
 namespace PortCMISTests
 {
@@ -131,6 +132,20 @@ namespace PortCMISTests
             Assert.AreEqual(2, jo1.Count);
             Assert.AreEqual("two", ((JsonObject)jo1["nested"])["level2"]);
             Assert.AreEqual(1, ((JsonObject)jo1["nested"]).Count);
+        }
+
+        [TestMethod]
+        public void TestNullJson()
+        {
+            JsonObject jo = new JsonObject();
+            jo.Add("n", null);
+
+            string jsonStr = jo.ToString();
+            Assert.AreEqual(jsonStr, @"{""n"":null}");
+
+            BrowserJsonNull.Value = "\"\"";
+            jsonStr = jo.ToString();
+            Assert.AreEqual(jsonStr, @"{""n"":""""}");
         }
     }
 }
