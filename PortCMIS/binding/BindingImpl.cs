@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Numerics;
+using PortCMIS.binding.browser;
 
 namespace PortCMIS.Binding.Impl
 {
@@ -62,6 +63,15 @@ namespace PortCMIS.Binding.Impl
             foreach (KeyValuePair<string, string> kv in sessionParameters)
             {
                 session.PutValue(kv.Key, kv.Value);
+            }
+
+            if (sessionParameters.TryGetValue(SessionParameter.JsonNullValue, out var jsonNullValue))
+            {
+                if (jsonNullValue == null)
+                {
+                    throw new ArgumentException("Null value string cannot be null");
+                }
+                BrowserJsonNull.Value = jsonNullValue;
             }
 
             // set up authentication provider

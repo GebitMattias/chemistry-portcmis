@@ -22,6 +22,7 @@
  * JSON.simple <http://code.google.com/p/json-simple/>.
  */
 
+using PortCMIS.binding.browser;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -50,7 +51,7 @@ namespace PortCMIS.Binding.Browser.Json
         {
             if (value == null)
             {
-                writer.Write("null");
+                writer.Write(BrowserJsonNull.Value);
                 return;
             }
 
@@ -84,7 +85,7 @@ namespace PortCMIS.Binding.Browser.Json
             {
                 if (Double.IsInfinity((Double)value) || Double.IsNaN((Double)value))
                 {
-                    writer.Write("null");
+                    writer.Write(BrowserJsonNull.Value);
                 }
                 else
                 {
@@ -97,7 +98,7 @@ namespace PortCMIS.Binding.Browser.Json
             {
                 if (Single.IsInfinity((Single)value) || Single.IsNaN((Single)value))
                 {
-                    writer.Write("null");
+                    writer.Write(BrowserJsonNull.Value);
                 }
                 else
                 {
