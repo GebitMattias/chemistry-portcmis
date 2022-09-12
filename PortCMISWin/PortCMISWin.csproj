@@ -2,7 +2,6 @@
   <PropertyGroup>
     <DefaultLanguage>en-US</DefaultLanguage>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile32</TargetFrameworkProfile>
     <TargetFramework>net472</TargetFramework>
     <AssemblyTitle>PortCMIS for Store Apps</AssemblyTitle>
     <Company>Apache Software Foundation</Company>
@@ -27,7 +26,6 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\PortCMIS\PortCMIS.csproj" />
   </ItemGroup>

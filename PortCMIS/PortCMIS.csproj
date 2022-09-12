@@ -34,9 +34,7 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>portcmis.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
     <None Include="portcmis.snk" />
-    <None Include="project.json" />
   </ItemGroup>
 </Project>
