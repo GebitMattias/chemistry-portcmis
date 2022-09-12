@@ -34,6 +34,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Numerics;
 using System.Text;
+using PortCMIS.binding.browser;
 
 namespace PortCMIS.Binding.Browser
 {
@@ -534,7 +535,7 @@ namespace PortCMIS.Binding.Browser
             {
                 if (Double.IsInfinity((Double)value) || Double.IsNaN((Double)value))
                 {
-                    return "null";
+                    return BrowserJsonNull.Value;
                 }
                 else
                 {
@@ -545,7 +546,7 @@ namespace PortCMIS.Binding.Browser
             {
                 if (Single.IsInfinity((Single)value) || Single.IsNaN((Single)value))
                 {
-                    return "null";
+                    return BrowserJsonNull.Value;
                 }
                 else
                 {
