@@ -502,7 +502,7 @@ namespace PortCMIS.Binding.Browser
         {
             if (value == null)
             {
-                return null;
+                return BrowserNull.Value;
             }
             else if (value is string)
             {
@@ -535,7 +535,7 @@ namespace PortCMIS.Binding.Browser
             {
                 if (Double.IsInfinity((Double)value) || Double.IsNaN((Double)value))
                 {
-                    return BrowserJsonNull.Value;
+                    return BrowserNull.Value;
                 }
                 else
                 {
@@ -546,7 +546,7 @@ namespace PortCMIS.Binding.Browser
             {
                 if (Single.IsInfinity((Single)value) || Single.IsNaN((Single)value))
                 {
-                    return BrowserJsonNull.Value;
+                    return BrowserNull.Value;
                 }
                 else
                 {

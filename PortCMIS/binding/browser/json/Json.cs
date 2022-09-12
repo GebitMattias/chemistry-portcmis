@@ -51,7 +51,7 @@ namespace PortCMIS.Binding.Browser.Json
         {
             if (value == null)
             {
-                writer.Write(BrowserJsonNull.Value);
+                writer.Write("null");
                 return;
             }
 
@@ -85,7 +85,7 @@ namespace PortCMIS.Binding.Browser.Json
             {
                 if (Double.IsInfinity((Double)value) || Double.IsNaN((Double)value))
                 {
-                    writer.Write(BrowserJsonNull.Value);
+                    writer.Write("null");
                 }
                 else
                 {
@@ -98,7 +98,7 @@ namespace PortCMIS.Binding.Browser.Json
             {
                 if (Single.IsInfinity((Single)value) || Single.IsNaN((Single)value))
                 {
-                    writer.Write(BrowserJsonNull.Value);
+                    writer.Write("null");
                 }
                 else
                 {

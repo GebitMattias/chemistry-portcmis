@@ -65,13 +65,9 @@ namespace PortCMIS.Binding.Impl
                 session.PutValue(kv.Key, kv.Value);
             }
 
-            if (sessionParameters.TryGetValue(SessionParameter.JsonNullValue, out var jsonNullValue))
+            if (sessionParameters.TryGetValue(SessionParameter.BrowserNullValue, out var nullValue))
             {
-                if (jsonNullValue == null)
-                {
-                    throw new ArgumentException("Null value string cannot be null");
-                }
-                BrowserJsonNull.Value = jsonNullValue;
+                BrowserNull.Value = nullValue;
             }
 
             // set up authentication provider
