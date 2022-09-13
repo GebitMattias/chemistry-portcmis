@@ -225,6 +225,9 @@ namespace PortCMIS.Binding.Browser
     {
         public string CmisAction { get; private set; }
 
+        /// <summary>Should NULL Properties be added to Content?</summary>
+        public bool AddNullProperties { get; set; }
+
         public IContentStream Stream { get; set; }
 
         public IProperties Properties { get; set; }
@@ -389,6 +392,11 @@ namespace PortCMIS.Binding.Browser
                             vidx++;
                         }
                     }
+                }
+                else if (this.AddNullProperties)
+                {
+                    result.Add(new KeyValuePair<string, string>(
+                        BindingConstants.ControlPropValue + idxStr, BrowserNull.Value));
                 }
                 idx++;
             }
