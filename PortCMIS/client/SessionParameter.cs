@@ -151,6 +151,6 @@ namespace PortCMIS.Client
 
         /// <summary>Defines that NULL properties should still be send when updating properties</summary>
         /// (Workaround for d.velop d3 that does otherwise not update values)
-        public const string BrowserSendNullValue = "org.apache.chemistry.portcmis.workaround.browserSendNullValue";
+        public const string BrowserSendPropertyNullValue = "org.apache.chemistry.portcmis.workaround.browserSendPropertyNullValue";
     }
 }

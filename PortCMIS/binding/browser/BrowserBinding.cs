@@ -226,11 +226,11 @@ namespace PortCMIS.Binding.Browser
         public string CmisAction { get; private set; }
 
         /// <summary>Should NULL Properties be added to Content?</summary>
-        public bool AddNullProperties { get; set; }
+        private bool SendPropertyNullValues { get; set; }
 
         public IContentStream Stream { get; set; }
 
-        public IProperties Properties { get; set; }
+        public IProperties Properties { get; private set; }
         public bool Succinct { get; set; }
         public DateTimeFormat DateTimeFormat { get; set; }
 
@@ -263,6 +263,12 @@ namespace PortCMIS.Binding.Browser
         public FormDataComposer(string cmisAction)
         {
             CmisAction = cmisAction;
+        }
+
+        public void AddProperties(IProperties properties, bool sendNullValues)
+        {
+            this.Properties = properties;
+            this.SendPropertyNullValues = sendNullValues;
         }
 
         public HttpContent CreateHttpContent()
@@ -393,7 +399,7 @@ namespace PortCMIS.Binding.Browser
                         }
                     }
                 }
-                else if (this.AddNullProperties)
+                else if (this.SendPropertyNullValues)
                 {
                     result.Add(new KeyValuePair<string, string>(
                         BindingConstants.ControlPropValue + idxStr, BrowserNull.Value));
@@ -1391,7 +1397,8 @@ namespace PortCMIS.Binding.Browser
 
             // prepare form data
             FormDataComposer composer = new FormDataComposer(BindingConstants.CmisActionCreateDocument);
-            composer.Properties = properties;
+            var sendNullValue = this.Session.GetValue(SessionParameter.BrowserSendPropertyNullValue, false);
+            composer.AddProperties(properties, sendNullValue);
             composer.Succinct = Succinct;
             composer.DateTimeFormat = DateTimeFormat;
             composer.Parameters[BindingConstants.ParamVersioningState] = versioningState;
@@ -1419,8 +1426,8 @@ namespace PortCMIS.Binding.Browser
 
             // prepare form data
             FormDataComposer composer = new FormDataComposer(BindingConstants.CmisActionCreateDocumentFromSource);
-            composer.Parameters[BindingConstants.ParamSourceId] = sourceId;
-            composer.Properties = properties;
+            var sendNullValue = this.Session.GetValue(SessionParameter.BrowserSendPropertyNullValue, false);
+            composer.AddProperties(properties, sendNullValue);
             composer.Succinct = Succinct;
             composer.DateTimeFormat = DateTimeFormat;
             composer.Parameters[BindingConstants.ParamVersioningState] = versioningState;
@@ -1448,7 +1455,8 @@ namespace PortCMIS.Binding.Browser
 
             // prepare form data
             FormDataComposer composer = new FormDataComposer(BindingConstants.CmisActionCreateFolder);
-            composer.Properties = properties;
+            var sendNullValue = this.Session.GetValue(SessionParameter.BrowserSendPropertyNullValue, false);
+            composer.AddProperties(properties, sendNullValue);
             composer.Succinct = Succinct;
             composer.DateTimeFormat = DateTimeFormat;
             composer.Policies = policies;
@@ -1475,7 +1483,8 @@ namespace PortCMIS.Binding.Browser
 
             // prepare form data
             FormDataComposer composer = new FormDataComposer(BindingConstants.CmisActionCreateRelationship);
-            composer.Properties = properties;
+            var sendNullValue = this.Session.GetValue(SessionParameter.BrowserSendPropertyNullValue, false);
+            composer.AddProperties(properties, sendNullValue);
             composer.Succinct = Succinct;
             composer.DateTimeFormat = DateTimeFormat;
             composer.Policies = policies;
@@ -1502,7 +1511,8 @@ namespace PortCMIS.Binding.Browser
 
             // prepare form data
             FormDataComposer composer = new FormDataComposer(BindingConstants.CmisActionCreatePolicy);
-            composer.Properties = properties;
+            var sendNullValue = this.Session.GetValue(SessionParameter.BrowserSendPropertyNullValue, false);
+            composer.AddProperties(properties, sendNullValue);
             composer.Succinct = Succinct;
             composer.DateTimeFormat = DateTimeFormat;
             composer.Policies = policies;
@@ -1529,7 +1539,8 @@ namespace PortCMIS.Binding.Browser
 
             // prepare form data
             FormDataComposer composer = new FormDataComposer(BindingConstants.CmisActionCreateItem);
-            composer.Properties = properties;
+            var sendNullValue = this.Session.GetValue(SessionParameter.BrowserSendPropertyNullValue, false);
+            composer.AddProperties(properties, sendNullValue);
             composer.Succinct = Succinct;
             composer.DateTimeFormat = DateTimeFormat;
             composer.Policies = policies;
@@ -1696,7 +1707,8 @@ namespace PortCMIS.Binding.Browser
 
             // prepare form data
             FormDataComposer composer = new FormDataComposer(BindingConstants.CmisActionUpdateProperties);
-            composer.Properties = properties;
+            var sendNullValue = this.Session.GetValue(SessionParameter.BrowserSendPropertyNullValue, false);
+            composer.AddProperties(properties, sendNullValue);
             composer.Succinct = Succinct;
             composer.DateTimeFormat = DateTimeFormat;
             composer.Parameters[BindingConstants.ParamChangeToken] =
@@ -1732,7 +1744,8 @@ namespace PortCMIS.Binding.Browser
             // prepare form data
             FormDataComposer composer = new FormDataComposer(BindingConstants.CmisActionBulkUpdate);
             composer.ObjectIdsAndChangeTokens = objectIdAndChangeToken;
-            composer.Properties = properties;
+            var sendNullValue = this.Session.GetValue(SessionParameter.BrowserSendPropertyNullValue, false);
+            composer.AddProperties(properties, sendNullValue);
             composer.Succinct = Succinct;
             composer.DateTimeFormat = DateTimeFormat;
             composer.AddSecondaryTypeIds = addSecondaryTypeIds;
@@ -1987,7 +2000,8 @@ namespace PortCMIS.Binding.Browser
             FormDataComposer composer = new FormDataComposer(BindingConstants.CmisActionCheckIn);
             composer.Stream = contentStream;
             composer.Parameters[BindingConstants.ParamMajor] = major;
-            composer.Properties = properties;
+            var sendNullValue = this.Session.GetValue(SessionParameter.BrowserSendPropertyNullValue, false);
+            composer.AddProperties(properties, sendNullValue);
             composer.Succinct = Succinct;
             composer.DateTimeFormat = DateTimeFormat;
             composer.Parameters[BindingConstants.ParamCheckinComment] = checkinComment;
