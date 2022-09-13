@@ -65,11 +65,6 @@ namespace PortCMIS.Binding.Impl
                 session.PutValue(kv.Key, kv.Value);
             }
 
-            if (sessionParameters.TryGetValue(SessionParameter.BrowserNullValue, out var nullValue))
-            {
-                BrowserNull.Value = nullValue;
-            }
-
             // set up authentication provider
             if (authenticationProvider == null)
             {

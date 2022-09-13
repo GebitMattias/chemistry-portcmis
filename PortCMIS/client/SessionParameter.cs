@@ -149,8 +149,8 @@ namespace PortCMIS.Client
         /// (Workaround for SharePoint 2010 and SharePoint 2013)</summary>
         public const string LatestVersionWithVersionSeriesId = "org.apache.chemistry.portcmis.workaround.getLatestVersionWithVersionSeriesId";
 
-        /// <summary>Defines the Null value to write for BrowserBinding</summary>
-        /// (Workaround for d.velop d3 that does not accept real null)
-        public const string BrowserNullValue = "org.apache.chemistry.portcmis.workaround.jsonNullValue";
+        /// <summary>Defines that NULL properties should still be send when updating properties</summary>
+        /// (Workaround for d.velop d3 that does otherwise not update values)
+        public const string BrowserSendNullValue = "org.apache.chemistry.portcmis.workaround.browserSendNullValue";
     }
 }
