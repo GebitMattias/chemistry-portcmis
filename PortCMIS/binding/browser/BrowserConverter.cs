@@ -26,6 +26,7 @@ using PortCMIS.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using PortCMIS.binding.browser;
 
 namespace PortCMIS.Binding.Browser
 {
@@ -1250,115 +1251,105 @@ namespace PortCMIS.Binding.Browser
         {
             if (property == null)
             {
-                return null;
+                return BrowserNull.Value;
             }
 
             if (succinct)
             {
-                object result = null;
-
                 if (propDef != null)
                 {
                     if (IsNullOrEmpty(property.Values))
                     {
-                        result = null;
+                        return BrowserNull.Value;
                     }
-                    else if (propDef.Cardinality == Cardinality.Single)
-                    {
-                        result = GetJsonValue(property.Values[0], dateTimeFormat);
-                    }
-                    else
-                    {
-                        JsonArray values = new JsonArray();
 
-                        foreach (object value in property.Values)
-                        {
-                            values.Add(GetJsonValue(value, dateTimeFormat));
-                        }
-
-                        result = values;
+                    if (propDef.Cardinality == Cardinality.Single)
+                    {
+                        return GetJsonValue(property.Values[0], dateTimeFormat);
                     }
+                    JsonArray values = new JsonArray();
+
+                    foreach (object value in property.Values)
+                    {
+                        values.Add(GetJsonValue(value, dateTimeFormat));
+                    }
+
+                    return values;
                 }
-                else
+
                 {
                     if (IsNullOrEmpty(property.Values))
                     {
-                        result = null;
+                        return BrowserNull.Value;
                     }
-                    else
+
+                    JsonArray values = new JsonArray();
+
+                    foreach (object value in property.Values)
                     {
-                        JsonArray values = new JsonArray();
-
-                        foreach (object value in property.Values)
-                        {
-                            values.Add(GetJsonValue(value, dateTimeFormat));
-                        }
-
-                        result = values;
+                        values.Add(GetJsonValue(value, dateTimeFormat));
                     }
-                }
 
-                return result;
+                    return values;
+                }
+            }
+
+            JsonObject result = new JsonObject();
+
+            result.Add(BrowserConstants.JsonPropertyId, property.Id);
+            SetIfNotNull(BrowserConstants.JsonPropertyLocalName, property.LocalName, result);
+            SetIfNotNull(BrowserConstants.JsonPropertyDisplayname, property.DisplayName, result);
+            SetIfNotNull(BrowserConstants.JsonPropertyQueryName, property.QueryName, result);
+
+            if (propDef != null)
+            {
+                result.Add(BrowserConstants.JsonPropertyDatatype, propDef.PropertyType.GetCmisValue());
+                result.Add(BrowserConstants.JsonPropertyCardinality, GetJsonEnumValue(propDef.Cardinality));
+
+                if (IsNullOrEmpty(property.Values))
+                {
+                    result.Add(BrowserConstants.JsonPropertyValue, BrowserNull.Value);
+                }
+                else if (propDef.Cardinality == Cardinality.Single)
+                {
+                    result.Add(BrowserConstants.JsonPropertyValue, GetJsonValue(property.Values[0], dateTimeFormat));
+                }
+                else
+                {
+                    JsonArray values = new JsonArray();
+
+                    foreach (object value in property.Values)
+                    {
+                        values.Add(GetJsonValue(value, dateTimeFormat));
+                    }
+
+                    result.Add(BrowserConstants.JsonPropertyValue, values);
+                }
             }
             else
             {
-                JsonObject result = new JsonObject();
+                result.Add(BrowserConstants.JsonPropertyDatatype, property.PropertyType.GetCmisValue());
 
-                result.Add(BrowserConstants.JsonPropertyId, property.Id);
-                SetIfNotNull(BrowserConstants.JsonPropertyLocalName, property.LocalName, result);
-                SetIfNotNull(BrowserConstants.JsonPropertyDisplayname, property.DisplayName, result);
-                SetIfNotNull(BrowserConstants.JsonPropertyQueryName, property.QueryName, result);
-
-                if (propDef != null)
+                if (IsNullOrEmpty(property.Values))
                 {
-                    result.Add(BrowserConstants.JsonPropertyDatatype, propDef.PropertyType.GetCmisValue());
-                    result.Add(BrowserConstants.JsonPropertyCardinality, GetJsonEnumValue(propDef.Cardinality));
-
-                    if (IsNullOrEmpty(property.Values))
-                    {
-                        result.Add(BrowserConstants.JsonPropertyValue, null);
-                    }
-                    else if (propDef.Cardinality == Cardinality.Single)
-                    {
-                        result.Add(BrowserConstants.JsonPropertyValue, GetJsonValue(property.Values[0], dateTimeFormat));
-                    }
-                    else
-                    {
-                        JsonArray values = new JsonArray();
-
-                        foreach (object value in property.Values)
-                        {
-                            values.Add(GetJsonValue(value, dateTimeFormat));
-                        }
-
-                        result.Add(BrowserConstants.JsonPropertyValue, values);
-                    }
+                    result.Add(BrowserConstants.JsonPropertyValue, BrowserNull.Value);
                 }
                 else
                 {
-                    result.Add(BrowserConstants.JsonPropertyDatatype, property.PropertyType.GetCmisValue());
+                    JsonArray values = new JsonArray();
 
-                    if (IsNullOrEmpty(property.Values))
+                    foreach (object value in property.Values)
                     {
-                        result.Add(BrowserConstants.JsonPropertyValue, null);
+                        values.Add(GetJsonValue(value, dateTimeFormat));
                     }
-                    else
-                    {
-                        JsonArray values = new JsonArray();
 
-                        foreach (object value in property.Values)
-                        {
-                            values.Add(GetJsonValue(value, dateTimeFormat));
-                        }
-
-                        result.Add(BrowserConstants.JsonPropertyValue, values);
-                    }
+                    result.Add(BrowserConstants.JsonPropertyValue, values);
                 }
-
-                ConvertExtension(property, result);
-
-                return result;
             }
+
+            ConvertExtension(property, result);
+
+            return result;
         }
 
         /// <summary>
@@ -3183,7 +3174,7 @@ namespace PortCMIS.Binding.Browser
         {
             if (obj == null)
             {
-                return null;
+                return BrowserNull.Value;
             }
 
             return obj.ToString();
@@ -3191,6 +3182,11 @@ namespace PortCMIS.Binding.Browser
 
         internal static object GetJsonValue(object value, DateTimeFormat dateTimeFormat)
         {
+            if (value == null)
+            {
+                return BrowserNull.Value;
+            }
+
             if (value is DateTime)
             {
                 if (dateTimeFormat == DateTimeFormat.Extended)
